@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home</title>
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+</head>
+<body>
+    <h2>Welcome {{ user.username }}</h2>
+    
+    <h3>Your Resumes</h3>
+    <!-- resumeapp/templates/home.html -->
+    {% if resumes %}
+    <ul>
+        {% for resume in resumes %}
+            <li>
+                <strong>{{ resume.full_name }}</strong><br>
+                <!-- Linking to the view resume page -->
+                <a href="{% url 'view_resume' resume_id=resume.id %}">View Resume</a><br>
+                
+                <!-- Linking to the update resume page -->
+                <a href="{% url 'update_resume' resume_id=resume.id %}">Edit Resume</a><br>
+                
+                <!-- Linking to the delete resume page -->
+                <a href="{% url 'delete_resume' resume_id=resume.id %}">Delete Resume</a><br><br>
+            </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>No resumes found. <a href="{% url 'create_resume' %}">Create a new resume</a></p>
+    {% endif %}
+
+    <!-- Add new resume link -->
+    <a href="{% url 'create_resume' %}" style="display:inline-block; margin-top:10px; padding:5px 10px; background-color:#007bff; color:white; text-decoration:none; border-radius:5px;">Add New Resume</a><br>
+    
+    <!-- Logout link -->
+    <a id="logoutbtn" href="{% url 'login' %}" style="display:inline-block; margin-top:10px; padding:5px 10px; background-color:#a47979; color:white; text-decoration:none; border-radius:5px;">Logout</a>
+
+        <script src="{% static 'js/home.js' %}"></script>
+</body>
+</html>
